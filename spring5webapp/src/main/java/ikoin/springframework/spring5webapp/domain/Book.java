@@ -1,5 +1,6 @@
 package ikoin.springframework.spring5webapp.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  * 
@@ -28,17 +30,18 @@ public class Book {
 	@JoinTable(name = "author_book",
 		joinColumns = @JoinColumn(name = "booki_id"),
 		inverseJoinColumns = @JoinColumn(name = "author_id"))
-	private Set<Author> authors;
-	
+	private Set<Author> authors = new HashSet<Author>();
+	@ManyToOne
+	private Publisher publisher;
+
 	public Book() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Book(String title, String isbn, Set<Author> authors) {
-		super();
+	public Book(String title, String isbn) {
 		this.title = title;
 		this.isbn = isbn;
-		this.authors = authors;
+		//this.authors = authors;
 	}
 
 	public Long getId() {
@@ -71,6 +74,14 @@ public class Book {
 
 	public void setAuthors(Set<Author> authors) {
 		this.authors = authors;
+	}
+	
+	public Publisher getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
 	}
 
 	@Override
